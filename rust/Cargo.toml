@@ -1,0 +1,28 @@
+# See: https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[package]
+name = "flux-theory"
+version = "0.0.0"
+authors = ["Arto Bendiken"]
+edition = "2024"
+#rust-version = "1.85"
+description = "A modern evolution on flow-based programming (FBP)."
+#documentation = "https://docs.rs/flux-theory"
+readme = true
+homepage = "https://flux-theory.dev"
+repository = "https://github.com/flux-doctrine/flux-theory"
+license = "Unlicense"
+keywords = ["fbp", "flow", "dataflow", "async"]
+categories = ["asynchronous", "concurrency", "rust-patterns", "no-std"]
+publish = true
+
+[features]
+default = ["all", "std"]
+all = []
+std = ["alloc"]
+unstable = []
+
+# Features:
+alloc = []
+
+[dependencies]
