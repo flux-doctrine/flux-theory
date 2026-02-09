@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.description        = "A modern evolution on flow-based programming (FBP)."
   gem.metadata           = {
     'bug_tracker_uri'   => "https://github.com/flux-doctrine/flux-theory/issues",
-    'changelog_uri'     => "https://github.com/flux-doctrine/flux-theory/blob/master/CHANGES.md",
+    'changelog_uri'     => "https://github.com/flux-doctrine/flux-theory/blob/master/ruby/CHANGES.md",
     'documentation_uri' => "https://rubydoc.info/gems/flux-theory",
     'homepage_uri'      => "https://flux-theory.dev",
     'source_code_uri'   => "https://github.com/flux-doctrine/flux-theory",
