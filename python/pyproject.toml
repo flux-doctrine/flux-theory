@@ -1,0 +1,78 @@
+# See: https://packaging.python.org/en/latest/tutorials/packaging-projects/
+# See: https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
+
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "flux-theory"
+description = "Flux Theory for Python"
+readme = "README.md"
+authors = [{ name = "Arto Bendiken", email = "arto@bendiken.net" }]
+license = "Unlicense"
+license-files = ["UNLICENSE"]
+dynamic = ["version"]
+
+requires-python = ">=3.10"
+dependencies = []
+
+keywords = []
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: Public Domain",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Software Development :: Libraries",
+]
+
+[project.optional-dependencies]
+
+[project.urls]
+Homepage = "https://flux-theory.dev"
+Repository = "https://github.com/flux-doctrine/flux-theory"
+Changelog = "https://github.com/flux-doctrine/flux-theory/blob/master/python/CHANGES.md"
+Releases = "https://github.com/flux-doctrine/flux-theory/releases"
+Issues = "https://github.com/flux-doctrine/flux-theory/issues"
+Documentation = "https://github.com/flux-doctrine/flux-theory/blob/master/README.md"
+
+[dependency-groups]
+dev = []
+docs = []
+lint = ["ruff"]
+test = ["pytest", "pytest-mock"]
+
+[tool.hatch.version]
+source = "vcs"
+fallback-version = "0.0.0"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/flux/theory/_version.py"
+
+[tool.hatch.build.targets.sdist]
+only-include = [
+    "AUTHORS",
+    "CHANGES.md",
+    "VERSION",
+    "src/flux",
+]
+exclude = [".*"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/flux"]
+
+[tool.hatch.envs.default]
+installer = "uv"
+
+[tool.mypy]
+disallow_untyped_defs = true
+
+[tool.uv]
+default-groups = ["dev", "docs"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
