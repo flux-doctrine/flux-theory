@@ -18,7 +18,7 @@ class Flux::Theory::Block
 
       def self.new(...)
         # Freeze subclass instances by default:
-        super(...).freeze
+        super(...) #.freeze # FIXME
       end
     end
   end
@@ -32,6 +32,10 @@ class Flux::Theory::Block
   # @param min [Integer, #to_i, nil] The expected message count (minimum)
   # @return [Input] the input port
   def self.port_input(name, type: nil, max: nil, min: nil)
+    raise ArgumentError, "type must be a Class" unless type.nil? || type.is_a?(Class)
+    raise ArgumentError, "max must be a positive integer" unless max.nil? || max.is_a?(Integer) && max > 0
+    raise ArgumentError, "min must be a non-negative integer" unless min.nil? || min.is_a?(Integer) && min >= 0
+    raise ArgumentError, "min must be less than or equal to max" unless min.nil? || max.nil? || min <= max
     name = name.to_sym
     @port_inputs ||= {}
     port_class = @port_inputs[name]
@@ -48,7 +52,7 @@ class Flux::Theory::Block
         end
       end
       @port_inputs[name] = port_class
-      self.class_eval("def #{name} = self.class.port_input(:#{name}).new()")
+      self.class_eval("def #{name} = @#{name} ||= self.class.port_input(:#{name}).new()")
     end
     port_class
   end
@@ -62,6 +66,10 @@ class Flux::Theory::Block
   # @param min [Integer, #to_i, nil] The expected message count (minimum)
   # @return [Output] the output port
   def self.port_output(name, type: nil, max: nil, min: nil)
+    raise ArgumentError, "type must be a Class" unless type.nil? || type.is_a?(Class)
+    raise ArgumentError, "max must be a positive integer" unless max.nil? || max.is_a?(Integer) && max > 0
+    raise ArgumentError, "min must be a non-negative integer" unless min.nil? || min.is_a?(Integer) && min >= 0
+    raise ArgumentError, "min must be less than or equal to max" unless min.nil? || max.nil? || min <= max
     name = name.to_sym
     @port_outputs ||= {}
     port_class = @port_outputs[name]
@@ -78,7 +86,7 @@ class Flux::Theory::Block
         end
       end
       @port_outputs[name] = port_class
-      self.class_eval("def #{name} = self.class.port_output(:#{name}).new()")
+      self.class_eval("def #{name} = @#{name} ||= self.class.port_output(:#{name}).new()")
     end
     port_class
   end

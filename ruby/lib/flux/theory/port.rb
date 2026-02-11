@@ -59,6 +59,10 @@ class Flux::Theory::Port
   # @param max [Integer, #to_i, nil] The expected message count (maximum)
   # @param min [Integer, #to_i, nil] The expected message count (minimum)
   def initialize(id, name, type: nil, max: nil, min: nil)
+    raise ArgumentError, "type must be a Class" unless type.nil? || type.is_a?(Class)
+    raise ArgumentError, "max must be a positive integer" unless max.nil? || max.is_a?(Integer) && max > 0
+    raise ArgumentError, "min must be a non-negative integer" unless min.nil? || min.is_a?(Integer) && min >= 0
+    raise ArgumentError, "min must be less than or equal to max" unless min.nil? || max.nil? || min <= max
     @id = id ? id.to_i : nil
     @name = name.to_sym
     @type = type

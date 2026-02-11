@@ -98,3 +98,22 @@ RSpec.configure do |config|
 end
 
 require 'flux/theory'
+
+include Flux::Theory
+
+class Const < Block
+  port_output :out
+  attr_reader :value
+  def initialize(value)
+    @value = value
+  end
+end # Const
+
+class Drop < Block
+  port_input :in
+end # Drop
+
+class Pass < Block
+  port_input :in
+  port_output :out
+end # Pass
