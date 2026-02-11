@@ -6,6 +6,27 @@ class Flux::Theory::Port
   private_class_method :new
 
   ##
+  # Extends subclasses with advanced features.
+  #
+  # @param [Class] subclass
+  def self.inherited(subclass)
+    subclass.class_eval do
+      public_class_method :new
+
+      def self.new(...)
+        # Freeze subclass instances by default:
+        super(...).freeze
+      end
+    end
+  end
+
+  ##
+  # The unique ID of this port.
+  #
+  # @return [Integer]
+  attr_reader :id
+
+  ##
   # The name of this port.
   #
   # @return [Symbol]
@@ -32,16 +53,17 @@ class Flux::Theory::Port
   ##
   # Instantiates a new port.
   #
+  # @param id [Integer, #to_i, nil] The unique ID of the port
   # @param name [Symbol, #to_sym] The name of the port
   # @param type [Class, nil] The message type
   # @param max [Integer, #to_i, nil] The expected message count (maximum)
   # @param min [Integer, #to_i, nil] The expected message count (minimum)
-  def initialize(name, type: nil, max: nil, min: nil)
+  def initialize(id, name, type: nil, max: nil, min: nil)
+    @id = id ? id.to_i : nil
     @name = name.to_sym
     @type = type
     @max = max ? max.to_i : nil
     @min = min ? min.to_i : nil
-    self.freeze
   end
 
   ##

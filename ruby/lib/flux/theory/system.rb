@@ -55,7 +55,7 @@ class Flux::Theory::System
   # @param capacity [Integer, #to_i, nil] The capacity of the connection
   # @return [System] `self`
   def connect(source, target, capacity: nil)
-    @connections[[source, target]] = capacity ? capacity.to_i : nil
+    @connections[[source.id, target.id]] = capacity ? capacity.to_i : nil
     self
   end
 end # Flux::Theory::System
